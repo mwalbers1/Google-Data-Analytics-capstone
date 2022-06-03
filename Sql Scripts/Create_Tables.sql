@@ -20,4 +20,18 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public."WEIGHT_LOG_INFO"
     OWNER to postgres;
 
-GO
+
+-- DROP TABLE IF EXISTS public."SLEEP_DAY_LOG";
+
+CREATE TABLE IF NOT EXISTS public."SLEEP_DAY_LOG"
+(
+    "ID" bigint,
+    "SLEEP_DAY" timestamp,
+    "TOTAL_SLEEP_RECORDS" integer,
+    "TOTAL_MINUTES_ASLEEP" integer,
+    "TOTAL_TIME_IN_BED" integer
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."SLEEP_DAY_LOG"
+    OWNER to postgres;
