@@ -1,5 +1,5 @@
 
--- Table: public.WEIGHT_LOG_INFO
+-- Table: WEIGHT_LOG_INFO
 
 -- DROP TABLE IF EXISTS public."WEIGHT_LOG_INFO";
 
@@ -21,4 +21,3 @@ ALTER TABLE IF EXISTS public."WEIGHT_LOG_INFO"
     OWNER to postgres;
 
 GO
-
