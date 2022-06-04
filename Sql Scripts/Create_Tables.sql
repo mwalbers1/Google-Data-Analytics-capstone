@@ -102,3 +102,60 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public."HEART_RATE_SECONDS"
     OWNER to postgres;
+
+-- DROP TABLE IF EXISTS public."HOURLY_CALORIES";
+
+CREATE TABLE IF NOT EXISTS public."HOURLY_CALORIES"
+(
+  "ID" bigint,
+  "ACTIVITY_HOUR" timestamp,
+  "CALORIES" integer
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."HOURLY_CALORIES"
+    OWNER to postgres;
+
+
+-- DROP TABLE IF EXISTS public."HOURLY_INTENSITY";
+
+CREATE TABLE IF NOT EXISTS public."HOURLY_INTENSITY"
+(
+  "ID" bigint,
+  "ACTIVITY_HOUR" timestamp,
+  "TOTAL_INTENSITY" integer,
+  "AVERAGE_INTENSITY" numeric(10,6)
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."HOURLY_INTENSITY"
+    OWNER to postgres;
+
+
+-- DROP TABLE IF EXISTS public."HOURLY_STEPS";
+
+CREATE TABLE IF NOT EXISTS public."HOURLY_STEPS"
+(
+  "ID" bigint,
+  "ACTIVITY_HOUR" timestamp,
+  "STEP_TOTAL" integer
+
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."HOURLY_STEPS"
+    OWNER to postgres;
+
+
+-- DROP TABLE IF EXISTS public."MINUTE_METS";
+
+CREATE TABLE IF NOT EXISTS public."MINUTE_METS"
+(
+    "ID"  bigint,
+    "ACTIVITY_MINUTE" timestamp,
+    "METS" integer
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."MINUTE_METS"
+    OWNER to postgres;
