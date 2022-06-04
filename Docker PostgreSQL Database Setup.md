@@ -13,7 +13,7 @@
 
 ### Import CSV file into database table
 
-1 - Create a new table in your database.  An example create statement is below.
+#### 1 - Create a new table in your database.  An example create statement is below.
 
 ```sql
 CREATE TABLE IF NOT EXISTS public."WEIGHT_LOG_INFO"
@@ -36,6 +36,6 @@ ALTER TABLE IF EXISTS public."WEIGHT_LOG_INFO"
 
 
 
-2 - In pgAdmin, select Import/Export from the menu. See screen shot below for importing CSV file
+#### 2 - In pgAdmin, select Import/Export from the menu. See screen shot below for importing CSV file
 
-![](pgAdmin_import_csv_file.png)
+![](resources/pgAdmin_import_csv_file.png)
