@@ -35,3 +35,70 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public."SLEEP_DAY_LOG"
     OWNER to postgres;
+
+
+-- DROP TABLE IF EXISTS public."DAILY_ACTIVITY";
+
+CREATE TABLE IF NOT EXISTS public."DAILY_ACTIVITY"
+(
+  "ID" bigint,
+  "ACTIVITY_DATE" timestamp,
+  "TOTAL_STEPS" integer,
+  "TOTAL_DISTANCE" numeric(10,6),
+  "TRACKER_DISTANCE" numeric(10,6),
+  "LOGGED_ACTIVITIES_DISTANCE" numeric(10,6),
+  "VERY_ACTIVE_DISTANCE" numeric(10,6),
+  "MODERATELY_ACTIVE_DISTANCE" numeric(10,6),
+  "LIGHT_ACTIVE_DISTANCE" numeric(10,6),
+  "SEDENTARY_ACTIVE_DISTANCE" numeric(10,6),
+  "VERY_ACTIVE_MINUTES" integer,
+  "FAIRLY_ACTIVE_MINUTES" integer,
+  "LIGHTLY_ACTIVE_MINUTES" integer,
+  "SEDENTARY_MINUTES" integer,
+  "CALORIES" integer
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."DAILY_ACTIVITY"
+    OWNER to postgres;
+
+-- DROP TABLE IF EXISTS public."DAILY_CALORIES";
+
+CREATE TABLE IF NOT EXISTS public."DAILY_CALORIES"
+(
+  "ID" bigint,
+  "ACTIVITY_DATE" date,
+  "CALORIES" integer
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."DAILY_CALORIES"
+    OWNER to postgres;
+
+
+-- DROP TABLE IF EXISTS public."DAILY_STEPS";
+
+CREATE TABLE IF NOT EXISTS public."DAILY_STEPS"
+(
+  "ID" bigint,
+  "ACTIVITY_DATE" date,
+  "STEP_TOTAL" integer
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."DAILY_STEPS"
+    OWNER to postgres;
+
+
+-- DROP TABLE IF EXISTS public."HEART_RATE_SECONDS";
+
+CREATE TABLE IF NOT EXISTS public."HEART_RATE_SECONDS"
+(
+    "ID" bigint,
+    "TIME" timestamp,
+    "VALUE" integer
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."HEART_RATE_SECONDS"
+    OWNER to postgres;
