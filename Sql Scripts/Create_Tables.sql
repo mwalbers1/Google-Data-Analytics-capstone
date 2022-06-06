@@ -62,34 +62,6 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public."DAILY_ACTIVITY"
     OWNER to postgres;
 
--- DROP TABLE IF EXISTS public."DAILY_CALORIES";
-
-CREATE TABLE IF NOT EXISTS public."DAILY_CALORIES"
-(
-  "ID" bigint,
-  "ACTIVITY_DATE" date,
-  "CALORIES" integer
-)
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."DAILY_CALORIES"
-    OWNER to postgres;
-
-
--- DROP TABLE IF EXISTS public."DAILY_STEPS";
-
-CREATE TABLE IF NOT EXISTS public."DAILY_STEPS"
-(
-  "ID" bigint,
-  "ACTIVITY_DATE" date,
-  "STEP_TOTAL" integer
-)
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."DAILY_STEPS"
-    OWNER to postgres;
-
-
 -- DROP TABLE IF EXISTS public."HEART_RATE_SECONDS";
 
 CREATE TABLE IF NOT EXISTS public."HEART_RATE_SECONDS"
@@ -159,3 +131,20 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public."MINUTE_METS"
     OWNER to postgres;
+
+-- DROP TABLE IF EXISTS public."MINUTE_METS";
+
+CREATE TABLE IF NOT EXISTS public."HOURLY_ACTIVITY"
+(
+    "ID" bigint,
+    "ACTIVITY_HOUR" timestamp,
+    "CALORIES" integer,
+    "STEP_TOTAL" integer,
+    "TOTAL_INTENSITY" integer,
+    "AVERAGE_INTENSITY" numeric(10,6)
+  )
+  TABLESPACE pg_default;
+
+  ALTER TABLE IF EXISTS public."MINUTE_METS"
+      OWNER to postgres;
+      
