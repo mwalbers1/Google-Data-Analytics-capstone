@@ -12,6 +12,7 @@ data/*.csv
 
 # User-specific files
 .Ruserdata
+.RProfile
 
 # Example code in package build process
 *-Ex.R

@@ -2,13 +2,23 @@
 
 ### Docker Setup
 
-1 - Download and install Docker Desktop. Docker Desktop can be downloaded from [Docker](www.docker.com) 
+1 - Download and install Docker Desktop from [Docker website](www.docker.com) 
 
 2 - On Home page of Docker, click on the Postgres latest image
 
-3 - Copy the connection string
+3 - Copy the connection string into clipboard
 
 ### Connect pgAdmin to Docker Postgres Database server
+
+1 - Download and install pgAdmin from <a href="https://www.pgadmin.org/download/" target="_blank">https://www.pgadmin.org/download/</a>
+
+2 - In pgAdmin Browser in left pane, right click servers and select Create Server
+
+3 - Enter a name for server in first tab
+
+4 - In connection tab, enter connection properties from the connection string that was copied to the clipboard
+
+5 - Click Save button
 
 
 ### Import CSV file into database table
