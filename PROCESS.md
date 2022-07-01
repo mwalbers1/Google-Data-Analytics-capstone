@@ -1,26 +1,68 @@
 ## PROCESS Phase
 
-In this phase the CSV files will be loaded into a new Postgres database.  The instructions for setting up a local Postgres database are at <a href="Docker%20PostgreSQL%20Database%20Setup.md" target="_blank">Docker Postgres Database Setup</a>
+In this phase, the raw fitness data files will be loaded into a new Postgres database.  The instructions for setting up a local Postgres database are at <a href="Docker%20PostgreSQL%20Database%20Setup.md" target="_blank">Docker Postgres Database Setup</a>
+
 
 ### Database Schema
 
 ![](resources/Fitness%20Tracker%20Database.drawio.png)
 
+### Load fitness data
+
+The raw fitness CSV data files are imported into the PostgreSQL database tables.  A SQL query is executed to populate the **Hourly_Activity** table.
+
+```sql
+INSERT INTO public."HOURLY_ACTIVITY"(
+	"ID", 
+	"ACTIVITY_HOUR", 
+	"CALORIES", 
+	"STEP_TOTAL", 
+	"TOTAL_INTENSITY", 
+	"AVERAGE_INTENSITY")
+SELECT HC."ID", 
+	HC."ACTIVITY_HOUR", 
+	COALESCE(HC."CALORIES", 0),
+	COALESCE(HS."STEP_TOTAL", 0), 
+	COALESCE(HI."TOTAL_INTENSITY", 0), 
+	COALESCE(HI."AVERAGE_INTENSITY", 0)
+FROM "HOURLY_CALORIES" AS HC
+INNER JOIN "HOURLY_INTENSITY" AS HI ON HI."ID" = HC."ID"
+	AND HI."ACTIVITY_HOUR" = HC."ACTIVITY_HOUR"
+INNER JOIN "HOURLY_STEPS" AS HS ON HS."ID" = HC."ID"
+	AND HS."ACTIVITY_HOUR" = HC."ACTIVITY_HOUR";
+```
+
+
 ### Database Queries
 
-SQL queries are used to aggregate the hourly and minute fitness data. The output of each SQL query will get exported to CSV files. The CSV files will then be analyzed with Microsoft Excel in the Analysis phase. The SQL queries are at this folder: <a href="https://github.com/mwalbers1/Google-Data-Analytics-capstone/tree/main/Sql%20Scripts" target="_blank">SQL Scripts</a>.
+Once the database is created and the tables are populated with the fitness data, then SQL queries are executed to extract and aggregate the fitness data from the Postgres database. The output of each SQL query will get exported to CSV files. 
 
-#### SQL Queries for aggregating Hourly activity
+The CSV files will then be analyzed with Microsoft Excel in the Analysis phase. The SQL queries are at this folder: <a href="https://github.com/mwalbers1/Google-Data-Analytics-capstone/tree/main/Sql%20Scripts" target="_blank">SQL Scripts</a>.
 
-The fitness steps and intensity data will be aggregated by hour of the day in order to analyze which hour(s) of the day are busiest and less frequent in terms of fitness activity.
 
-SQL queries will be written to aggregate hourly sedentary activity.  This will determine which hours of day fitness members are most sedentary.
+#### SQL Queries for Daily Activity
 
-#### SQL Queries for aggregating Daily activity
+The following SQL query returns the Daily Activity records for each fitness user for each day.  There are two calculated columns in the query for sedentary and active hours.
 
-This group of SQL queries will aggregate sleep minutes for each day as a daily sleep average. This will tell us on average which days of the week fitness members sleep the most and least amount of time.
+```sql
+SELECT "ID", 
+		"ACTIVITY_DATE", 
+		"TOTAL_STEPS", 
+		"TOTAL_DISTANCE", 
+		"TRACKER_DISTANCE", 
+		"LOGGED_ACTIVITIES_DISTANCE", 
+		"VERY_ACTIVE_DISTANCE", 
+		"MODERATELY_ACTIVE_DISTANCE", 
+		"LIGHT_ACTIVE_DISTANCE", 
+		"SEDENTARY_ACTIVE_DISTANCE", 
+		"VERY_ACTIVE_MINUTES", 
+		"FAIRLY_ACTIVE_MINUTES", 
+		"LIGHTLY_ACTIVE_MINUTES", 
+		"SEDENTARY_MINUTES", 
+		"CALORIES",
+		"SEDENTARY_MINUTES"/60 AS "SEDENTARY_HOURS",
+		("VERY_ACTIVE_MINUTES" + "FAIRLY_ACTIVE_MINUTES" + "LIGHTLY_ACTIVE_MINUTES") AS "ACTIVE_HOURS"
+FROM public."DAILY_ACTIVITY";
+```
 
-SQL queries will also aggregate sedentary activity by the day of week.  This will help analyze which days of the week have higher sedentary minutes.  Then daily sedentary activity will be analyzed against daily sleep activity to determine whether there is a connection between sleep and sedentary activity levels.
-
-SQL queries will report daily activity and sleep activity for analysis.
 
