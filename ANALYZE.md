@@ -51,7 +51,7 @@ FROM public."DAILY_ACTIVITY"
 WHERE "SEDENTARY_MINUTES"/60 >= 16;
 ```
 
-### Low Activity Hours
+#### Low Activity Hours
 
 This SQL query returns fitness members who had days of extreme low activity.  The output will be saved to a CSV file for the Share phase.
 
@@ -78,19 +78,61 @@ WHERE ("VERY_ACTIVE_MINUTES" + "FAIRLY_ACTIVE_MINUTES" + "LIGHTLY_ACTIVE_MINUTES
 ```
 
 
-#### Less Active and High Sedentary members
+#### Low Activity <ins>and</ins> High Sedentary members
 
 The histogram of Activity hours revealed a large number of members who are active between zero and one hour on a particular day.  The second histogram shows a lot of fitness members who had high levels of sedentary activity. It is possible that some of the high sedentary members maintained their fitness routines on the days they logged high sedentary activity.
 
 The low activity members may have low sedentary hours and enough sleep. So a SQL query will need to extract fitness members who logged **both** low activity and high sedentary hours. This group of members may exhibit health risks or they may choose to leave the application altogether. The SQL query below will return these particular fitness members and the output will be saved to a CSV file for the Share phase.
 
+```sql
+WITH cte_daily_activity AS (
+	SELECT "ID", 
+		"ACTIVITY_DATE", 
+		"TOTAL_STEPS", 
+		"TOTAL_DISTANCE", 
+		"TRACKER_DISTANCE", 
+		"LOGGED_ACTIVITIES_DISTANCE", 
+		"VERY_ACTIVE_DISTANCE", 
+		"MODERATELY_ACTIVE_DISTANCE", 
+		"LIGHT_ACTIVE_DISTANCE", 
+		"SEDENTARY_ACTIVE_DISTANCE", 
+		"VERY_ACTIVE_MINUTES", 
+		"FAIRLY_ACTIVE_MINUTES", 
+		"LIGHTLY_ACTIVE_MINUTES", 
+		"SEDENTARY_MINUTES", 
+		"CALORIES",
+		"SEDENTARY_MINUTES"/60 AS "SEDENTARY_HOURS",
+		("VERY_ACTIVE_MINUTES" + "FAIRLY_ACTIVE_MINUTES" + "LIGHTLY_ACTIVE_MINUTES") / 60 AS "ACTIVE_HOURS"
+FROM public."DAILY_ACTIVITY"    
+)
+SELECT S."ID",
+		S."ACTIVITY_DATE",
+		S."TOTAL_STEPS", 
+		S."TOTAL_DISTANCE", 
+		S."TRACKER_DISTANCE", 
+		S."LOGGED_ACTIVITIES_DISTANCE", 
+		S."VERY_ACTIVE_DISTANCE", 
+		S."MODERATELY_ACTIVE_DISTANCE", 
+		S."LIGHT_ACTIVE_DISTANCE", 
+		S."SEDENTARY_ACTIVE_DISTANCE", 
+		S."VERY_ACTIVE_MINUTES", 
+		S."FAIRLY_ACTIVE_MINUTES", 
+		S."LIGHTLY_ACTIVE_MINUTES", 
+		S."SEDENTARY_MINUTES", 
+		S."CALORIES",
+		S."SEDENTARY_HOURS",
+		S."ACTIVE_HOURS"
+FROM cte_daily_activity S
+INNER JOIN (
+	SELECT "ID",
+		"ACTIVITY_DATE",
+		"SEDENTARY_HOURS",
+		"ACTIVE_HOURS"
+	FROM cte_daily_activity
+	WHERE "ACTIVE_HOURS" <= 1
+	) S2 ON S."ID" = S2."ID" AND S."ACTIVITY_DATE" = S2."ACTIVITY_DATE"
+WHERE S."SEDENTARY_HOURS" >= 16;
+```
 
-
-
-
-
-
-
-
-
-
+<br/>
+<a href="https://github.com/mwalbers1/Google-Data-Analytics-capstone/blob/main/SHARE.md" target="_blank">Click here to goto SHARE phase</a>
