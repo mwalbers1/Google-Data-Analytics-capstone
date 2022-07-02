@@ -1,0 +1,110 @@
+---
+title: "Share Phase"
+author: "Michael Albers"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(janitor)
+library(skimr)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(here)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(lubridate)
+```
+
+
+## Share Phase
+
+Communicate data findings from the Analyze phase through data visualizations.  Each data visualization is part of a larger data story about the initial questions for the case study.
+
+The Analysis phase discovered two groups of fitness users in which to target for outreach activities or further analysis. The first group are individuals who had activity of one or less hours for at least one day.  The second group of fitness members were those who had one or more days of high sedentary hours.
+
+The data visualizations for both groups of fitness app users will be shared with stakeholders and recommendations will be made for each group in the Act phase.
+
+### Low Activity Group of Fitness Users
+
+Load groups of low activity individuals into data frame
+
+```{r}
+activity.df <- read_csv(here("analysis data", "Low_Activity_Hours.csv"))
+```
+
+```{r}
+str(activity.df)
+```
+
+
+```{r}
+activity.df$DAY_NAME <- wday(activity.df$ACTIVITY_DATE, label=TRUE)
+```
+
+```{r}
+head(activity.df)
+```
+
+### High Sedentary Group of Fitness Users
+
+Load high sedentary users into data frame
+
+```{r}
+sedentary.df <- read_csv(here("analysis data", "High_Sedentary_Hours.csv"))
+```
+
+```{r}
+str(sedentary.df)
+```
+
+```{r}
+sedentary.df$DAY_NAME <- wday(sedentary.df$ACTIVITY_DATE, label=TRUE)
+```
+
+```{r}
+head(sedentary.df)
+```
+
+
+### Low Activity Days
+
+```{r}
+ggplot(activity.df, aes(DAY_NAME)) +
+  geom_bar(fill="lightblue") +
+  ggtitle("Low Activity Fitness Members") +
+  labs(x="Day Name", y="Count")
+```
+
+The highest low activity day is on Thursday and Sunday is the second highest day of low activity. This means that among the people in the low activity group, members report the most low activity of one hour or less on Thursdays. Members in the low activity group experience the second highest count of low activity days on Sunday. 
+
+
+### High Sedentary Days
+
+```{r}
+ggplot(sedentary.df, aes(DAY_NAME)) +
+  geom_bar(fill="lightgreen") +
+  ggtitle("High Sedentary Hours") +
+  labs(x="Day Name", y="Count")
+```
+Tuesday's and Wednesday's are the two highest days of sedentary hours for this group of fitness app users.
+
+### Analyze sleep activity for both groups
+
+```{r}
+
+```
+
+```{r}
+
+```
