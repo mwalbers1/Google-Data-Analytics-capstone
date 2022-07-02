@@ -26,5 +26,9 @@ The final list of files for this project are :
 - sleepDay_merged.csv
 - weihtLogInfo_merged.csv
 
+<br/>
+<a href="https://github.com/mwalbers1/Google-Data-Analytics-capstone/blob/main/PROCESS.md" target="_blank">Click here to goto PROCESS Phase</a>
+
+
 
 

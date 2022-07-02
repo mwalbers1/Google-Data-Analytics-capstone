@@ -64,5 +64,8 @@ SELECT "ID",
 		("VERY_ACTIVE_MINUTES" + "FAIRLY_ACTIVE_MINUTES" + "LIGHTLY_ACTIVE_MINUTES") / 60 AS "ACTIVE_HOURS"
 FROM public."DAILY_ACTIVITY";
 ```
+<br/>
+<a href="https://github.com/mwalbers1/Google-Data-Analytics-capstone/blob/main/ANALYZE.md" target="_blank">Click here to goto ANALYZE Phase</a>
+
 
 
