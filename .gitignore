@@ -1,7 +1,7 @@
 .DS_Store
 
-# Exclude Csv data files
-data/*.csv
+# Exclude raw fitness CSV data files
+data/
 
 # History files
 .Rhistory
@@ -13,6 +13,7 @@ data/*.csv
 # User-specific files
 .Ruserdata
 .RProfile
+*.Rproj
 
 # Example code in package build process
 *-Ex.R
@@ -25,6 +26,8 @@ data/*.csv
 
 # RStudio files
 .Rproj.user/
+renv/
+renv.lock
 
 # produced vignettes
 vignettes/*.html
