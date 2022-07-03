@@ -64,6 +64,17 @@ SELECT "ID",
 		("VERY_ACTIVE_MINUTES" + "FAIRLY_ACTIVE_MINUTES" + "LIGHTLY_ACTIVE_MINUTES") / 60 AS "ACTIVE_HOURS"
 FROM public."DAILY_ACTIVITY";
 ```
+
+#### SQL Query for Sleep Activity
+
+```sql
+SELECT "ID", 
+	"SLEEP_DAY", 
+	"TOTAL_MINUTES_ASLEEP"/60 AS SLEEP_HOURS
+FROM public."SLEEP_DAY_LOG";
+```
+
+
 <br/>
 <a href="https://github.com/mwalbers1/Google-Data-Analytics-capstone/blob/main/ANALYZE.md" target="_blank">Click here to goto ANALYZE Phase</a>
 
