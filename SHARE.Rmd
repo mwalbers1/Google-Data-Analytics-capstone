@@ -1,7 +1,6 @@
 ---
 title: "Share Phase"
-author: "Michael Albers"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -27,7 +26,6 @@ library(lubridate)
 ```
 
 
-## Share Phase
 
 Communicate data findings from the Analyze phase through data visualizations.  Each data visualization is part of a larger data story about the initial questions for the case study.
 
@@ -35,76 +33,132 @@ The Analysis phase discovered two groups of fitness users in which to target for
 
 The data visualizations for both groups of fitness app users will be shared with stakeholders and recommendations will be made for each group in the Act phase.
 
-### Low Activity Group of Fitness Users
 
-Load groups of low activity individuals into data frame
-
-```{r}
+```{r include=FALSE}
 activity.df <- read_csv(here("analysis data", "Low_Activity_Hours.csv"))
 ```
 
-```{r}
-str(activity.df)
-```
-
-
-```{r}
+```{r include=FALSE}
 activity.df$DAY_NAME <- wday(activity.df$ACTIVITY_DATE, label=TRUE)
 ```
 
-```{r}
+```{r include=FALSE}
 head(activity.df)
 ```
 
-### High Sedentary Group of Fitness Users
 
-Load high sedentary users into data frame
-
-```{r}
+```{r include=FALSE}
 sedentary.df <- read_csv(here("analysis data", "High_Sedentary_Hours.csv"))
 ```
 
-```{r}
-str(sedentary.df)
-```
-
-```{r}
+```{r include=FALSE}
 sedentary.df$DAY_NAME <- wday(sedentary.df$ACTIVITY_DATE, label=TRUE)
-```
-
-```{r}
-head(sedentary.df)
 ```
 
 
 ### Low Activity Days
 
-```{r}
+```{r echo=FALSE}
 ggplot(activity.df, aes(DAY_NAME)) +
   geom_bar(fill="lightblue") +
   ggtitle("Low Activity Fitness Members") +
-  labs(x="Day Name", y="Count")
+  labs(x="Day Name", y="Count of Individuals")
 ```
 
-The highest low activity day is on Thursday and Sunday is the second highest day of low activity. This means that among the people in the low activity group, members report the most low activity of one hour or less on Thursdays. Members in the low activity group experience the second highest count of low activity days on Sunday. 
+
+In the low activity group, Thursday has the highest number of members with zero or one hour of activity.
 
 
 ### High Sedentary Days
 
-```{r}
+```{r echo=FALSE}
 ggplot(sedentary.df, aes(DAY_NAME)) +
   geom_bar(fill="lightgreen") +
-  ggtitle("High Sedentary Hours") +
-  labs(x="Day Name", y="Count")
-```
-Tuesday's and Wednesday's are the two highest days of sedentary hours for this group of fitness app users.
-
-### Analyze sleep activity for both groups
-
-```{r}
-
+  ggtitle("High Sedentary Members") +
+  labs(x="Day Name", y="Count of Individuals")
 ```
 
-```{r}
 
+Tuesday's and Wednesday's have the highest number of individuals logging high sedentary hours.
+
+
+
+```{r include=FALSE}
+activity_sed.df <- read_csv(here("analysis data", "Low_Activity_and_High_Sedentary.csv"))
 ```
+
+
+```{r include=FALSE}
+activity_sed.df$DAY_NAME <- wday(activity_sed.df$ACTIVITY_DATE, label=TRUE)
+```
+
+
+### Analyze sleep activity
+
+```{r include=FALSE}
+sleep_activity.df <- read_csv(here("analysis data", "Sleep_Hours.csv"))
+```
+
+
+```{r include=FALSE}
+sleep_activity.df$DAY_NAME <- wday(sleep_activity.df$SLEEP_DAY, label=TRUE)
+```
+
+
+```{r include=FALSE}
+avg_sleep_activity <- sleep_activity.df %>% 
+  group_by(DAY_NAME) %>% 
+  summarize(avg_sleep_hrs = mean(sleep_hours))
+```
+
+```{r echo=FALSE}
+ggplot(avg_sleep_activity, aes(x=DAY_NAME, y=avg_sleep_hrs)) +
+  ggtitle("Average Sleep Hours - All Fitness Users") +
+  geom_bar(stat = 'identity', fill="purple") +
+  labs(x="Day", y="Average Sleep Hours")
+```
+
+
+For all fitness members, the average sleep hours per day is six hours or higher.  All members on average sleep more hours on Sundays and Wednesdays.
+
+
+```{r include=FALSE}
+avg_sleep_by_id <- sleep_activity.df %>% 
+  group_by(ID, DAY_NAME) %>% 
+  summarize(avg_sleep_hrs = mean(sleep_hours))
+```
+
+```{r include=FALSE}
+distinct_ids <- activity_sed.df %>% 
+  distinct(ID) 
+```
+
+
+```{r include=FALSE}
+new_sleep.df <- sleep_activity.df %>% 
+                filter(ID %in% distinct_ids$ID)
+```
+
+```{r include=FALSE}
+avg_new_sleep.df <- new_sleep.df %>% 
+  group_by(DAY_NAME) %>% 
+  summarize(avg_sleep_hrs = mean(sleep_hours))
+```
+
+```{r echo=FALSE}
+ggplot(avg_new_sleep.df, aes(x=DAY_NAME, y=avg_sleep_hrs)) +
+  ggtitle("Individuals - Low activity and High sedentary hours") +
+  geom_bar(stat = "identity", fill = "blue") +
+  labs(x="Day", y="Average Sleep Hours")
+```
+
+This chart shows that the group of 24 individuals who logged both low activity and high sedentary hours sleep on average at least six hours per day.  This is equivalent to the average sleep hours for the entire group of fitness users.
+
+
+### Individuals with Low Activity and High Sedentary Hours
+
+```{r echo=FALSE, message=FALSE}
+kable(distinct_ids)
+```
+
+
