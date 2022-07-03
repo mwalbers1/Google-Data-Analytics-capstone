@@ -29,7 +29,7 @@ The data will be queried and aggregated at the hourly and daily levels to uncove
 
 ### 5 - <a href="SHARE.md" target="_blank">Share</a>
 
-Communicate findings and a data story through data visualizations
+Communicate findings and a data story through data visualizations. The data visualizations were created using R.
 
 ### 6 - <a href="ACT.md" target="_blank">Act</a>
 
