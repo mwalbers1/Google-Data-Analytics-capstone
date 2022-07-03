@@ -12,13 +12,13 @@ Analysis of daily activity hours compared to daily sedentary hours
 
 ![](resources/Activity%20Hours%20Histogram.png)
 
-The above histogram reveals that most fitness users are active between 2 to 6 hours per day.  There are close to 200 fitness users who were only active one or less hours on at least one day. A future SQL query can be used to analyze this group of fitness users
+The above histogram reveals that most fitness users are active between 2 to 6 hours per day.  There are about  200 records in which the active hours is zero or one on a particular day. A future SQL query can be used to analyze this group of fitness users
 
 
 ![](resources/Sedentary%20Hours%20Histogram.png)
 
 
-The above histogram shows that most fitness users are sedentary between eight and twenty four hours a day.  There are approximately 500 fitness users who were sedentary for at least sixteen hours for one or more days which is concerning since this does not allow for much daily exercise and sleep.
+The above histogram shows that most fitness users are sedentary between eight and twenty four hours a day.  There are approximately 500 records where sedentary hours is at least sixteen hours for a particular day. 
 
 
 ![](resources/Sedentary%20and%20Active%20Daily%20Averages.png)
@@ -80,9 +80,9 @@ WHERE ("VERY_ACTIVE_MINUTES" + "FAIRLY_ACTIVE_MINUTES" + "LIGHTLY_ACTIVE_MINUTES
 
 #### Low Activity <ins>and</ins> High Sedentary members
 
-The histogram of Activity hours revealed a large number of members who are active between zero and one hour on a particular day.  The second histogram shows a lot of fitness members who had high levels of sedentary activity. It is possible that some of the high sedentary members maintained their fitness routines on the days they logged high sedentary activity.
+The histogram of Activity hours revealed a large number of records with active-hours between zero and one on a particular day.  The second histogram shows a lot of records with high levels of sedentary activity. 
 
-The low activity members may have low sedentary hours and enough sleep. So a SQL query will need to extract fitness members who logged **both** low activity and high sedentary hours. This group of members may exhibit health risks or they may choose to leave the application altogether. The SQL query below will return these particular fitness members and the output will be saved to a CSV file for the Share phase.
+A SQL query will extract fitness members who logged **both** low activity and high sedentary hours. The SQL query below will return these particular fitness members and the output will be saved to a CSV file for the Share phase.
 
 ```sql
 WITH cte_daily_activity AS (
