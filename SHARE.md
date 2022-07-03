@@ -72,3 +72,6 @@ group of fitness users.
 | 8583815059 |
 | 8792009665 |
 | 8877689391 |
+
+<br/>
+<a href="https://github.com/mwalbers1/Google-Data-Analytics-capstone/blob/main/ACT.md" target="_blank">Click here to goto ACT Phase</a>
